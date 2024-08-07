@@ -16,7 +16,7 @@ type handler struct {
 }
 
 // Create Handler for `/v1/statuses/`
-func NewRouter(ar repository.Account, su usecase.Status) http.Handler {
+func NewRouter(ar repository.Account, su usecase.Status, sr repository.Status) http.Handler {
 	r := chi.NewRouter()
 
 	// r.Group()により、特定のグループに対してミドルウェアを適用する
