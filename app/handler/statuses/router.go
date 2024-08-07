@@ -21,9 +21,12 @@ func NewRouter(ar repository.Account) http.Handler {
 	// グループに対して適用されたミドルウェアは、そのグループに属する全てのエンドポイントに対して適用される
 	r.Group(func(r chi.Router) {
 		// リクエストの認証を行う
-		r.Use(auth.Middleware(ar))
 		h := &handler{ar}
-		r.Post("/", h.Create)
+		r.Get("/{id}", h.Get)
+		r.Group(func(r chi.Router) {
+			r.Use(auth.Middleware(ar))
+			r.Post("/", h.Create)
+		})
 	})
 
 	return r
