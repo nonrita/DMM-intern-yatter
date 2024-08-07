@@ -30,7 +30,7 @@ func Run() error {
 	statusUsecase := usecase.NewStatus(db, dao.NewStatus(db))
 
 	r := handler.NewRouter(
-		accountUsecase, dao.NewAccount(db),statusUsecase,
+		accountUsecase, dao.NewAccount(db),statusUsecase, dao.NewStatus(db),
 	)
 
 	ctx, _ := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
