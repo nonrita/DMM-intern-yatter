@@ -21,14 +21,13 @@ func NewRouter(ar repository.Account, su usecase.Status, sr repository.Status) h
 
 	// r.Group()により、特定のグループに対してミドルウェアを適用する
 	// グループに対して適用されたミドルウェアは、そのグループに属する全てのエンドポイントに対して適用される
+	h := &handler{ar, su}
+	r.Get("/{id}", h.Get)
+
 	r.Group(func(r chi.Router) {
 		// リクエストの認証を行う
-		h := &handler{ar, su}
-		r.Get("/{id}", h.Get)
-		r.Group(func(r chi.Router) {
-			r.Use(auth.Middleware(ar))
-			r.Post("/", h.Create)
-		})
+		r.Use(auth.Middleware(ar))
+		r.Post("/", h.Create)
 	})
 
 	return r
