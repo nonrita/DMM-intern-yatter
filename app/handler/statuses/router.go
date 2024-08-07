@@ -13,6 +13,7 @@ import (
 type handler struct {
 	ar repository.Account
 	su usecase.Status
+	sr repository.Status
 }
 
 // Create Handler for `/v1/statuses/`
@@ -21,7 +22,7 @@ func NewRouter(ar repository.Account, su usecase.Status, sr repository.Status) h
 
 	// r.Group()により、特定のグループに対してミドルウェアを適用する
 	// グループに対して適用されたミドルウェアは、そのグループに属する全てのエンドポイントに対して適用される
-	h := &handler{ar, su}
+	h := &handler{ar, su, sr}
 	r.Get("/{id}", h.Get)
 
 	r.Group(func(r chi.Router) {
