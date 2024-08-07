@@ -8,5 +8,6 @@ import (
 )
 
 type Status interface{
+	FindByID(ctx context.Context, id int) (*object.Status, error)
 	Create(ctx context.Context, tx *sqlx.Tx, sta *object.Status) error
 }
