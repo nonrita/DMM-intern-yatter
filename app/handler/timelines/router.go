@@ -1,23 +1,20 @@
 package timelines
 
 import (
-	"fmt"
 	"net/http"
+	"yatter-backend-go/app/domain/repository"
 
 	"github.com/go-chi/chi/v5"
 )
 
 type handler struct {
+	tr repository.Timeline
 }
 
-func test (w http.ResponseWriter, r *http.Request){
-	fmt.Fprint(w, "time")
-}
-
-func NewRouter() http.Handler {
+func NewRouter(tr repository.Timeline) http.Handler {
 	r := chi.NewRouter()
-
-	r.Get("/", test)
+	h := &handler{tr}
+	r.Get("/public", h.GetAll)
 
 	return r
 }
